@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--Information regarding the code-->
+
+<head>
+    <title>Splatters Paintball</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <base href="../"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="resources/scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src=></script>
+    <script src="resources/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="splatters_main_mobile_theme.css">
+    <link rel="stylesheet" type="text/css" href="resources/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="resources/scrollbar/jquery.mCustomScrollbar.css">
+    <script>
+        if (screen.width >= 699) {
+            document.location = "splatters_main.html";
+        }       
+        
+        var animating = false;
+        var i = 0;
+        var photoOld;
+        var slideSpeed = 500;
+        var currentPage = "#home";
+        var currentNavPage = "#nav-home"
+        var newPage;
+        var newNavPage;
+        var selected;
+        $(document).ready(function () {
+            $(function () {
+                $("#home").load("mobile/home.html");
+            });
+            $(function () {
+                $(".header-right").load("mobile/header-right.html");
+            });
+            $(function () {
+                $("#prices").load("mobile/prices.html");
+            });
+            $(function () {
+                $("#hours").load("mobile/hours-location.html");
+            });
+            //Hide stuff
+            $("#prices").hide();
+            $("#hours").hide();
+            $("#gallery").hide();
+            //Load top
+            $(function () {
+                $("#nav-row").load("mobile/nav-row.html", function () {
+                    $("#nav-home").css({                                "background": "rgba(155, 155, 155, 0.5)"
+                    });
+                    
+                    $(".nav").click(function () {
+                        if (($(this).attr("id").replace('nav-', '#') != currentPage) && !animating) {
+                            animating = true;
+                            $(".main-block").css("height", "900");
+                            newPage = $(this).attr("id");
+                            newNavPage = '#' + newPage;
+                            newPage = newPage.replace('nav-', '#');
+                            $("#center").slideUp(slideSpeed, function () {
+                                $(currentPage).hide();
+                                $(currentNavPage).css({
+                                    "background": "rgba(55, 55, 55, 0.5)"
+                                });
+                                $(newNavPage).css({
+                                    "background": "rgba(155, 155, 155, 0.5)"
+                                });
+                                $(newPage).show();
+                                currentNavPage = newNavPage;
+                                currentPage = newPage;
+                                $("#center").slideDown(slideSpeed, function () {
+                                    $(".main-block").css("height", null);
+                                    animating = false;
+                                });
+                            });
+                        }
+                    });
+                });
+            });
+            //Facebook
+            (function (d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+                js = d.createElement(s);
+                js.id = id;
+                js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+            //Gallery Functions
+            $(function () {
+                $("#gallery").load("gallery.html", function () {
+                    photoOld = $("#gallery-bin").children().first();
+                    photoOld.css("opacity", "0.5")
+                    $(".img-thumbnail").click(function () {
+                        var mainImage = $("#gallery-main").children("img");
+                        var photo = $(this).attr("src");
+                        // Check if selected photo is already up
+                        if (!($(mainImage).attr("src") == photo) && !animating) {
+                            //Restore thumbnail
+                            animating = true;
+                            $(photoOld).fadeTo("fast", 1.0);
+                            //Fade Thumbnail
+                            $(this).fadeTo("fast", 0.4, function () {
+                                photoOld = $(this);
+                            });
+                            //Switch main image
+                            $(mainImage).fadeOut(300, function () {
+                                $(this).attr("src", photo);
+                                $(this).fadeIn(300);
+                                animating = false;
+                            });
+                        }
+                    });
+                });
+            });
+            (function ($) {
+                $(window).on("load", function () {
+                    $("#gallery-bin").mCustomScrollbar();
+                });
+            })(jQuery);
+        });
+    </script>
+</head>
+<!--Where the real magic starts-->
+
+<body>
+    <div id="fb-root"></div>
+    <div class="container-fluid main-block">
+        <div class="row" id="header">
+            <div class="col-md-8 header-left">
+                <div id="title1">SPLATTERS</div>
+                <div id="title2">War Zone</div>
+            </div>
+            <div class="col-md-4 header-right"> </div>
+        </div>
+        <div class="row" id="center">
+            <!--TOP BAR-->
+            <div class="row">
+                <div class="col-xs-12" id="nav-row"> </div>
+            </div>
+            <!--RIGHT-->
+            <div class="row">
+            <div class="col-xs-12" id="right">
+                <div id="home"></div>
+                <div id="prices"></div>
+                <div id="hours"></div>
+                <div id="gallery"></div>
+            </div>
+            </div>
+        </div>
+        <div class="row" id="footer"></div>
+    </div>
+</body>
+
+</html>

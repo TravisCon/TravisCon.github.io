@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--Information regarding the code-->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Splatters Paintball</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="resources/scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src=></script>
+    <script src="resources/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="splatters_main_theme.css">
+    <link rel="stylesheet" type="text/css" href="resources/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="resources/scrollbar/jquery.mCustomScrollbar.css">
+    <link rel="stylesheet" href="photos/icons/style.css">
+    <script>
+        if (screen.width <= 699) {
+            document.location = "mobile/splatters_main_mobile.html";
+        }
+        
+        var animating = false;
+        var i = 0;
+        var photoOld;
+        var slideSpeed = 500;
+        var currentPage = "#home";
+        var currentNavPage = "#nav-home"
+        var newPage;
+        var newNavPage;
+        var selected;
+        $(document).ready(function () {
+            $(function () {
+                $("#home").load("home.html");
+            });
+            $(function () {
+                $(".header-right").load("header-right.html");
+            });
+            $(function () {
+                $("#prices").load("prices.html");
+            });
+            $(function () {
+                $("#hours").load("hours-location.html");
+            });
+            //Hide stuff
+            $("#prices").hide();
+            $("#hours").hide();
+            $("#gallery").hide();
+            
+            //Load left Column
+            $(function () {
+                $("#left").load("left_column.html", function () {
+                    $("#nav-home").css({                                "background": "rgba(155, 155, 155, 0.5)",      "left": "15px"
+                    });
+                    
+                    //Navigation Hover
+                    $(".nav").hover(function() {
+                        selected = ($(this).attr("id") == currentNavPage.replace('#', ''));
+                        
+                        if (!selected && !animating){
+                        $(this).animate({
+                            left: "15",
+                            }, "fast")
+                        }
+                    }, function(){
+                        if (!selected && !animating){
+                         $(this).animate({
+                            left: "0",
+                            }, "fast");
+                        }
+                    });
+                    
+                    //Navigation Click
+                    $(".nav").click(function () {
+                        if (($(this).attr("id").replace('nav-', '#') != currentPage) && !animating) {
+                            animating = true;
+                            $(".main-block").css("height", "900");
+                            newPage = $(this).attr("id");
+                            newNavPage = '#' + newPage;
+                            newPage = newPage.replace('nav-', '#');
+                            $("#center").slideUp(slideSpeed, function () {
+                                $(currentPage).hide();
+                                $(currentNavPage).css({
+                                    "background": "rgba(55, 55, 55, 0.5)",
+                                    "left": "0px"
+                                });
+                                $(newNavPage).css({
+                                    "background": "rgba(155, 155, 155, 0.5)",
+                                    "left": "15px"
+                                });
+                                $(newPage).show();
+                                currentNavPage = newNavPage;
+                                currentPage = newPage;
+                                $("#center").slideDown(slideSpeed, function () {
+                                    $(".main-block").css("height", null);
+                                    animating = false;
+                                });
+                            });
+                        }
+                    });
+                });
+            });
+            //Facebook
+            (function (d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+                js = d.createElement(s);
+                js.id = id;
+                js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+            //Gallery Functions
+            $(function () {
+                $("#gallery").load("gallery.html", function () {
+                    photoOld = $("#gallery-bin").children().first();
+                    photoOld.css("opacity", "0.5")
+                    $(".img-thumbnail").click(function () {
+                        var mainImage = $("#gallery-main").children("img");
+                        var photo = $(this).attr("src");
+                        // Check if selected photo is already up
+                        if (!($(mainImage).attr("src") == photo) && !animating) {
+                            //Restore thumbnail
+                            animating = true;
+                            $(photoOld).fadeTo("fast", 1.0);
+                            //Fade Thumbnail
+                            $(this).fadeTo("fast", 0.4, function () {
+                                photoOld = $(this);
+                            });
+                            //Switch main image
+                            $(mainImage).fadeOut(300, function () {
+                                $(this).attr("src", photo);
+                                $(this).fadeIn(300);
+                                animating = false;
+                            });
+                        }
+                    });
+                });
+            });
+            (function ($) {
+                $(window).on("load", function () {
+                    $("#gallery-bin").mCustomScrollbar();
+                });
+            })(jQuery);
+        });
+    </script>
+</head>
+<!--Where the real magic starts-->
+
+<body>
+    <div id="fb-root"></div>
+    <div class="container main-block">
+        <div class="row" id="header">
+            <div class="col-md-8 header-left">
+                <div id="title1">SPLATTERS</div>
+                <div id="title2">War Zone</div>
+            </div>
+            <div class="col-md-4 header-right"> </div>
+        </div>
+        <div class="row" id="center">
+            <!--LEFT-->
+            <div class="col-xs-2" id="left"> </div>
+            <!--RIGHT-->
+            <div class="col-xs-10" id="right">
+                <div id="home"></div>
+                <div id="prices"></div>
+                <div id="hours"></div>
+                <div id="gallery"></div>
+            </div>
+        </div>
+        <div class="row" id="footer"></div>
+    </div>
+</body>
+
+</html>
