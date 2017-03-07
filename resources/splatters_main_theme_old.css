@@ -1,0 +1,112 @@
+@font-face {
+    font-family: myTitleFont1;
+    src: url(fonts/broken-detroit.ttf);
+}
+
+@font-face {
+    font-family: myTitleFont2;
+    src: url(fonts/broken-detroit.ttf);
+}
+
+body { 
+    margin-top: 0px; 
+    background-image: url("photos/darkwood_1.jpg");
+    background-repeat: no-repeat;
+    background-position: center top;
+}
+
+#footer-table {
+    margin: auto;
+    text-align: center;
+    width: 80%;
+}
+
+#title1 {
+    font-size: 106px;
+    font-family: myTitleFont1;
+}
+
+#title2 {
+    font-size: 50px;
+}
+
+#left {
+    height: 712px;
+    width: 200px;
+    background-color: black;
+    background-image: url("photos/greenwood_1.jpg");
+    background-repeat: no-repeat;
+    float: left;
+    color: white;
+    text-align:center; 
+    box-shadow: 2px 2px 5px black;
+    margin: 4px 0px 8px 0px;
+}
+
+#right {
+    /*padding: 40px 0px 40px 20px;*/
+    /*box-shadow: 2px 2px 5px black;*/
+    margin: 2px 2px 0px 0px;
+    float: right;
+}
+
+#drop {
+    height: 50px;
+    width: 50px;
+    /*background-color: #3B5998;*/
+    padding-bottom: 3px;
+    color: white;
+    text-align:center;
+}
+
+#drop-container {
+    background-color: #3B5998;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.fb-page, #drop, #drop-container{
+    float: right;
+    clear: both;
+}
+
+.header {
+    background-image: url("photos/paintwall_1.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    box-shadow: 5px 5px 10px black;
+}
+
+.center{
+/*    background-color:rgba(236, 236, 236, 0.55);*/
+    background-color:rgba(255, 255, 255, 0.65);
+    border: 1px solid #1f2e1f;
+    box-shadow: 5px 5px 10px black;
+    height: auto;
+    overflow: hidden;
+}
+
+.footer {
+    background: -webkit-linear-gradient(#1f2e1f, #334c33); /*For Safari*/
+    background: -o-linear-gradient(#1f2e1f, #334c33); /*Opera 11.1*/
+    background: -moz-linear-gradient(#1f2e1f, #334c33); /*Firefox 3.6*/
+    background: linear-gradient(#1f2e1f, #334c33); /* Standard syntax */
+    box-shadow: 5px 5px 10px black;
+}
+
+.header , .footer {
+    text-align: center;
+    clear: both;
+    border: 1px solid transparent;
+    color: white;
+}
+
+.header , .footer, .center{
+    width: 1024px;
+    margin: auto;
+}
+
+p { text-indent: 30px;}
+
+#error { color: red;}

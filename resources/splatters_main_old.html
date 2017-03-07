@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--Information regarding the code-->
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="splatters_main_theme.css">
+    <title>Splatters Paintball</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script>
+        var animating = false;
+        $(document).ready(function () {
+            $(".fb-page").hide();
+            $(function () {
+                $("#left").load("left_column.html");
+            });
+            $(function () {
+                $(".footer").load("footer.html");
+            });
+            (function (d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+                js = d.createElement(s);
+                js.id = id;
+                js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+            $("#drop").mouseenter(function () {
+                if (!animating && $("#right").width() < 200) {
+                    animating = true;
+                    $("#drop-container").animate({
+                        width: "+=300"
+                    }, 150, function () {
+                        $(".fb-page").slideDown(200, function () {
+                            animating = false;
+                        });
+                    });
+                }
+            });
+            $("#right").mouseleave(function () {
+                if (!animating && $("#right").width() > 200) {
+                    animating = true;
+                    $(".fb-page").slideUp(150, function () {
+                        $("#drop-container").animate({
+                            width: "-=300"
+                        }, 200, function () {
+                            animating = false;
+                        });
+                    });
+                }
+            });
+        });
+    </script>
+</head>
+<!--Where the real magic starts-->
+
+<body>
+    <div class="header">
+        <div id="title1">SPLATTERS</div>
+        <div id="title2">War Zone</div>
+    </div>
+    <div class="center">
+        <!--LEFT-->
+        <div id="left"> </div>
+        <!--RIGHT-->
+        <div id="right">
+            <div id="drop-container"> <img src="photos/fb-art.png" alt="Facebook Icon" id="drop">
+                <div class="fb-page" data-href="https://www.facebook.com/SplattersWarzone/" data-height="600" width="350" data-tabs="timeline" data-small-header="true" data-adapt-container-width="true" data-hide-cover="true" data-show-facepile="true">
+                    <blockquote cite="https://www.facebook.com/SplattersWarzone/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/SplattersWarzone/">Splatters Indoor Paintball Rexburg Idaho</a></blockquote>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer"></div>
+</body>
+
+</html>
